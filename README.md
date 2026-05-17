@@ -2,35 +2,42 @@
 
 **Beadandó leírása**
 
-A projekt maga egy egyszerű 3D játék megvalósítása OpenGL és SDL2 segítségével. A játék egy kietlen, elhagyatott területen játszódik, ahol a játékos feladata könyvek összegyűjtése adott időn belül. A játék hangulatát sötét, kissé horrorisztikus jellegűre szeretném megoldani.
+A projekt maga egy egyszerű 3D játék megvalósítása OpenGL és SDL2 segítségével. A játék egy kietlen, elhagyatott területen játszódik, ahol a játékos feladata tekercsek összegyűjtése adott időn belül. A játék hangulatát sötét, kissé horrorisztikus jellegűre szeretném megoldani.
 
 **Játékmenet**
 
-A játékos egy karaktert irányít egy nyílt pályán, ahol összesen 8 darab könyvet kell megtalálnia és összegyűjtenie.
+A játékos egy karaktert irányít egy nyílt pályán, ahol összesen 8 darab tekercset kell megtalálnia és összegyűjtenie. A karakter zseblámpával tud világítani az F gomb lenyomásával.
 
 Időlimit: 2 perc
-Cél: az összes könyv begyűjtése a megadott időn belül
-A könyvek a pályán elszórva helyezkednek majd el.
+Cél: az összes tekercs begyűjtése a megadott időn belül
+A tekercsek a pályán elszórva helyezkednek majd el.
 
 A játék akkor ér véget:
 
--ha a játékos összegyűjti az összes könyvet (győzelem),
+-ha a játékos összegyűjti az összes tekercset (győzelem),
 -vagy ha lejár az idő (vereség).
+
+**Segítség**
+
+A súgó előhívható a H gomb lenyomásával.
 
 **Pálya és környezet**
 
-A játék egy elhagyatott területen játszódik, amely az alábbi elemeket fogja tartalmazni a tervek szerint:
+A játék egy elhagyatott területen játszódik, amely az alábbi elemeket tartalmazza:
 
--kiszáradt, rémisztő fák
--egy kút
--csontvázak
+-hold az égen
+-rémisztő fák, fatörzsek
+-csontváz
 -egy elhagyatott ház
+-egy sátor
+-sátor mellett tábortűz (tűz animációval)
+-tekercsek amik lebegnek
 
 Ezek az objektumok statikus modellek, amelyeken a játékos nem tud áthaladni (ütközésvizsgálat fogja biztosítani).
 
 A pályát köd egészíti ki, amely:
 -fokozza a hangulatot
--opcionálisan ki és bekapcsolható a beállításokban
+-opcionálisan ki és bekapcsolható a K gomb lenyomásával
 
 A pálya fő fényforrása az égen található Hold lesz.
 
@@ -38,19 +45,8 @@ A pálya fő fényforrása az égen található Hold lesz.
 
 A képernyő egyik sarkában megjelenik egy HUD, amely folyamatosan frissül:
 -hátralévő idő (pl. 01:45)
--összegyűjtött könyvek száma (pl. 3/8)
-
-**Menü rendszer**
-
-A játék indulásakor egy főmenü fog megjelenni az alábbi opciókkal:
-
-Start – játék indítása
-Help – súgó megjelenítése
-Settings – beállítások
-Quit – kilépés
+-összegyűjtött tekercsek száma (pl. 3/8)
 
 **Hangok**
 
 A játéknak lesz egy háttérzenéje, amit sdl_mixer segítségével tervezek megvalósítani.
-
-A technológia részek fejlesztés közben kerülnek még majd hozzáadásra.
