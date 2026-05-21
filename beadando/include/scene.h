@@ -42,6 +42,7 @@ typedef struct Scene
     bool fog_enabled;
     float brightness;
     GLuint help;
+    GLuint end;
 } Scene;
 
 /**
@@ -78,7 +79,10 @@ void draw_origin();
 void render_moon(const Scene* scene);
 
 // Set the moon's light properties.
-void set_moon_light();
+void set_moon_light(const Scene* scene);
+
+// Set the flashlight properties.
+void set_flashlight(const Camera* camera, bool enabled, float brightness);
 
 // Render the house with its own settings.
 void render_house(const Scene* scene);
@@ -103,5 +107,20 @@ bool scene_collect_scroll_if_touching(Scene* scene, float x, float y, float z);
 
 // Render the fireplace object in the scene.
 void render_fireplace(const Scene* scene);
+
+// Check if a point is inside an axis-aligned bounding box.
+bool point_inside_aabb(const AABB* box, float x, float y, float z);
+
+// Check if the camera is close enough to collect a scroll, and mark it as collected.
+bool scene_collect_scroll_if_touching(Scene* scene, float x, float y, float z);
+
+// Compute the shadow position on the ground for an object based on the light source position and the object's position.
+void compute_shadow_position(const vec3* light_pos, float obj_x, float obj_y, float obj_z, float ground_z, float* shadow_x, float* shadow_y);
+
+// Render the shadow of a model on the ground based on the light source position and the model's position, scale, and rotation.
+void render_shadow_for_model(const vec3* light_pos, float obj_x, float obj_y, float obj_z, float obj_scale, float obj_rotation, const Model* model);
+
+// Render shadows for all relevant objects in the scene based on the current light source and camera position.
+void render_shadows(const Scene* scene, const Camera* camera);
 
 #endif /* SCENE_H */

@@ -57,14 +57,14 @@ void init_app(App* app, int width, int height)
 
     /* Initialize UI */
     app->ui_font = TTF_OpenFont("assets/fonts/Arial.ttf", 24);
-    if (app->ui_font == NULL) {
-        /* Try Windows system fonts as fallback */
-        app->ui_font = TTF_OpenFont("C:\\Windows\\Fonts\\arial.ttf", 24);
-    }
-    if (app->ui_font == NULL) {
-        printf("[WARNING] Could not load font: %s\n", TTF_GetError());
-        app->ui_font = NULL;
-    }
+    // if (app->ui_font == NULL) {
+    //     /* Try Windows system fonts as fallback */
+    //     app->ui_font = TTF_OpenFont("C:\\Windows\\Fonts\\arial.ttf", 24);
+    // }
+    // if (app->ui_font == NULL) {
+    //     printf("[WARNING] Could not load font: %s\n", TTF_GetError());
+    //     app->ui_font = NULL;
+    // }
     
     app->timer_start_time = SDL_GetTicks();
     app->scroll_count = 0;
@@ -128,11 +128,6 @@ void reshape(GLsizei width, GLsizei height)
         -.06, .06,
         .1, 100.0
     );
-    /* glFrustum(
-        -.08, .08,
-        -.06, .06,
-        .1, 10
-    ); */
 }
 
 void move_camera_with_collision(App* app, double time)
@@ -415,6 +410,11 @@ void update_ui_textures(App* app)
     }
 }
 
+bool is_timer_expired(const App* app)
+{
+    return (SDL_GetTicks() - app->timer_start_time) >= 120000u;
+}
+
 void render_ui(App* app)
 {
     int padding = 10;
@@ -446,6 +446,26 @@ void render_ui(App* app)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+    if (is_timer_expired(app) && app->scene.end != 0) {
+        glBindTexture(GL_TEXTURE_2D, app->scene.end);
+        glBegin(GL_QUADS);
+            glTexCoord2f(0.0f, 0.0f); glVertex2f(0.0f, 0.0f);
+            glTexCoord2f(1.0f, 0.0f); glVertex2f((float)app->window_width, 0.0f);
+            glTexCoord2f(1.0f, 1.0f); glVertex2f((float)app->window_width, (float)app->window_height);
+            glTexCoord2f(0.0f, 1.0f); glVertex2f(0.0f, (float)app->window_height);
+        glEnd();
+        glPopAttrib();
+
+        glMatrixMode(GL_MODELVIEW);
+        glPopMatrix();
+
+        glMatrixMode(GL_PROJECTION);
+        glPopMatrix();
+
+        glMatrixMode(GL_MODELVIEW);
+        return;
+    }
 
     if (app->show_help && app->scene.help != 0) {
         glBindTexture(GL_TEXTURE_2D, app->scene.help);

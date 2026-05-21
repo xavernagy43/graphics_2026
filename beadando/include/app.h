@@ -4,6 +4,7 @@
 #include "camera.h"
 #include "scene.h"
 
+#include <GL/gl.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <stdbool.h>
@@ -97,5 +98,10 @@ void update_ui_textures(App* app);
  * Move the camera based on its speed and handle collision with the scene.
 */
 void move_camera_with_collision(App* app, double time);
+
+/**
+ * Check if the timer has expired (120 seconds).
+ */
+bool is_timer_expired(const App* app);
 
 #endif /* APP_H */

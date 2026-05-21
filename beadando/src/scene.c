@@ -61,7 +61,7 @@ static const AABB scene_obstacles[] = {
     { 15.0f, 17.0f, 13.0f, 15.0f, -2.0f, 3.0f },
 };
 
-static bool point_inside_aabb(const AABB* box, float x, float y, float z)
+bool point_inside_aabb(const AABB* box, float x, float y, float z)
 {
     return x >= box->minX && x <= box->maxX
         && y >= box->minY && y <= box->maxY
@@ -138,6 +138,9 @@ void init_scene(Scene* scene)
 
     // Help
     scene->help = load_texture("assets/textures/help.jpg");
+
+    // End
+    scene->end = load_texture("assets/textures/end.jpg");
 
     // Scroll
     load_model(&(scene->scroll), "assets/models/scroll.obj");
@@ -279,17 +282,14 @@ void render_moon(const Scene* scene)
     moon_material.diffuse.green = 0.95f;
     moon_material.diffuse.blue = 1.0f;
 
-    // Erősebb specular = enyhe csillogás
     moon_material.specular.red = 0.85f;
     moon_material.specular.green = 0.85f;
     moon_material.specular.blue = 0.95f;
 
-    // Magasabb shininess = finom fényes felület
     moon_material.shininess = 80.0f;
 
     set_material(&moon_material);
 
-    // Enyhe saját fény (glow érzés)
     float emission_color[] = { 0.12f, 0.12f, 0.15f, 1.0f };
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, emission_color);
 
@@ -509,10 +509,6 @@ void render_fireplace(const Scene* scene)
     glBindTexture(GL_TEXTURE_2D, scene->texture_fireplace);
     draw_model(&(scene->fireplace));
 
-    /*
-        Tűz effekt
-    */
-
     float t = SDL_GetTicks() * 0.006f;
 
     float flameHeight = 0.9f + 0.15f * sin(t * 3.0f);
@@ -524,12 +520,10 @@ void render_fireplace(const Scene* scene)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
-    // A tábortűz közepe
     glTranslatef(0.0f, 0.0f, 0.35f);
 
     glBegin(GL_TRIANGLES);
 
-    // Külső narancssárga láng
     glColor4f(1.0f, 0.35f, 0.0f, 0.35f);
     glVertex3f(-flameWidth,0.0f,0.0f);
 
@@ -541,8 +535,6 @@ void render_fireplace(const Scene* scene)
 
     glEnd();
 
-
-    // Belső fényesebb láng
     glBegin(GL_TRIANGLES);
 
     glColor4f(1.0f,1.0f,0.2f,0.7f);
@@ -609,7 +601,7 @@ void render_scrolls(const Scene* scene)
 }
 
 
-static void compute_shadow_position(
+void compute_shadow_position(
     const vec3* light_pos,
     float obj_x, float obj_y, float obj_z,
     float ground_z,
@@ -634,7 +626,7 @@ static void compute_shadow_position(
     *shadow_y = light_pos->y + (obj_y - light_pos->y) * t;
 }
 
-static void render_shadow_for_model(
+void render_shadow_for_model(
     const vec3* light_pos,
     float obj_x, float obj_y, float obj_z,
     float obj_scale, float obj_rotation,
@@ -670,7 +662,7 @@ static void render_shadow_for_model(
     glPopMatrix();
 }
 
-static void render_shadows(const Scene* scene, const Camera* camera)
+void render_shadows(const Scene* scene, const Camera* camera)
 {
     if (!scene->flashlight_enabled) return;
     
