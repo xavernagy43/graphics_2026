@@ -46,8 +46,8 @@ A tekercsek a pályán elszórva helyezkednek majd el.
 
 A játék akkor ér véget:
 
--ha a játékos összegyűjti az összes tekercset (győzelem),
--vagy ha lejár az idő (vereség).
+- ha a játékos összegyűjti az összes tekercset (győzelem),
+- vagy ha lejár az idő (vereség).
 
 **Segítség**
 
@@ -57,23 +57,23 @@ A súgó előhívható a H gomb lenyomásával.
 
 A játék egy elhagyatott területen játszódik, amely az alábbi elemeket tartalmazza:
 
--hold az égen
--rémisztő fák, fatörzsek
--egy elhagyatott ház
--egy sátor
--sátor mellett tábortűz (tűz animációval)
--tekercsek amik lebegnek
+- hold az égen
+- rémisztő fák, fatörzsek
+- egy elhagyatott ház
+- egy sátor
+- sátor mellett tábortűz (tűz animációval)
+- tekercsek amik lebegnek
 
 Ezek az objektumok statikus modellek, amelyek nagy részén a játékos nem tud áthaladni, ütközésvizsgálat biztosítja.
 
 A pályát köd egészíti ki, amely:
--fokozza a hangulatot
--opcionálisan ki és bekapcsolható a K gomb lenyomásával
+- fokozza a hangulatot
+- opcionálisan ki és bekapcsolható a K gomb lenyomásával
 
 A pálya fő fényforrása az égen található Hold lesz.
 
 **HUD**
 
 A képernyő egyik sarkában megjelenik egy HUD, amely folyamatosan frissül:
--hátralévő idő (pl. 01:45)
--összegyűjtött tekercsek száma (pl. 3/8)
+- hátralévő idő (pl. 01:45)
+- összegyűjtött tekercsek száma (pl. 3/8)
